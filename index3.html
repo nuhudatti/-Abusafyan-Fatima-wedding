@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Timeless Wedding • Galaxy Page</title>
+  <meta name="description" content="A heart-touching, timeless wedding webpage that blends elegance, motion, and poetry into a single experience." />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;900&family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind (CDN - with custom config) -->
+  <script>
+    tailwind = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Playfair Display', 'serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            royal: {
+              50: '#EEF2FF',
+              100: '#E0E7FF',
+              200: '#C7D2FE',
+              300: '#A5B4FC',
+              400: '#818CF8',
+              500: '#6366F1',
+              600: '#4F46E5',
+              700: '#4338CA',
+              800: '#3730A3',
+              900: '#312E81'
+            },
+            blush: '#FCE7F3',
+            champagne: '#F8E7C9',
+            aureate: '#E7C66D',
+            ink: '#0B1021',
+            night: '#0A0A12',
+            gold: '#FFD88B'
+          },
+          boxShadow: {
+            soft: '0 10px 40px rgba(0,0,0,.25)',
+            glow: '0 0 0 1px rgba(255,216,139,.35), 0 8px 40px rgba(255,216,139,.25)'
+          },
+          animation: {
+            float: 'float 8s ease-in-out infinite',
+            shimmer: 'shimmer 2.5s linear infinite',
+            fadeUp: 'fadeUp .8s ease both',
+          },
+          keyframes: {
+            float: {
+              '0%,100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' }
+            },
+            shimmer: {
+              '0%': { backgroundPosition: '-200% 0' },
+              '100%': { backgroundPosition: '200% 0' }
+            },
+            fadeUp: {
+              '0%': { opacity: 0, transform: 'translateY(20px)' },
+              '100%': { opacity: 1, transform: 'translateY(0)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-2f0ySxgYj6aQ9bQz9qgY3lSPS6b+U8a7H0wQ9m6Cw1sXx8QvQm+K3gVh7A2D1Sg1cZg5p7Qm0X0b4lYcVb7GVA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- GSAP for premium motion -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Lenis Smooth Scroll -->
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
+
+  <style>
+    :root{color-scheme: dark;}
+    body{background: radial-gradient(1500px 800px at 10% -10%, rgba(255,216,139,.15), transparent 60%),
+                        radial-gradient(1000px 600px at 90% -10%, rgba(129,140,248,.13), transparent 60%),
+                        radial-gradient(900px 500px at 50% 120%, rgba(252,231,243,.08), transparent 60%),
+                        #080A12;}
+    /* Glass */
+    .glass{backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); background: rgba(17, 24, 39, .45); border: 1px solid rgba(255, 216, 139, .15)}
+    /* Shimmer line */
+    .shimmer{background: linear-gradient(90deg, transparent, rgba(255,216,139,.55), transparent); background-size: 200% 100%}
+    /* Masonry (CSS-only) */
+    .masonry{column-count: 1; column-gap: 1rem}
+    @media (min-width: 640px){.masonry{column-count: 2}}
+    @media (min-width: 1024px){.masonry{column-count: 3}}
+    .masonry-item{break-inside: avoid; margin-bottom: 1rem}
+    /* Lightbox */
+    .lightbox-backdrop{position: fixed; inset:0; background: rgba(0,0,0,.85); display:none; align-items:center; justify-content:center; z-index: 1000}
+    .lightbox-backdrop.open{display:flex}
+    .lightbox-img{max-width: 92vw; max-height: 86vh; border-radius: 18px; box-shadow: 0 10px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(255,216,139,.25)}
+    .particle-canvas{position: fixed; inset:0; z-index:-1}
+  </style>
+</head>
+<body class="text-white font-sans antialiased selection:bg-gold/20 selection:text-gold/90">
+  <!-- Particle stars background -->
+  <canvas id="stars" class="particle-canvas"></canvas>
+
+  <!-- Nav -->
+  <header class="fixed top-0 left-0 right-0 z-50">
+    <div class="mx-auto max-w-7xl px-4">
+      <div class="mt-4 flex items-center justify-between glass rounded-2xl px-4 py-3 shadow-soft">
+        <div class="flex items-center gap-3">
+          <div class="h-9 w-9 rounded-full bg-gradient-to-tr from-gold/70 to-royal-400/70 shadow-glow grid place-items-center"><i class="fa-solid fa-dove"></i></div>
+          <span class="font-display text-xl tracking-wide">Timeless Union</span>
+        </div>
+        <nav class="hidden md:flex items-center gap-6 text-sm">
+          <a href="#story" class="hover:text-gold transition">Story</a>
+          <a href="#timeline" class="hover:text-gold transition">Timeline</a>
+          <a href="#gallery" class="hover:text-gold transition">Gallery</a>
+          <a href="#blessing" class="hover:text-gold transition">Blessing</a>
+        </nav>
+        <button id="audioToggle" class="rounded-xl border border-gold/30 px-3 py-1.5 text-xs md:text-sm hover:bg-gold/10 transition"><i class="fa-solid fa-music"></i> Ambient</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="relative min-h-[92vh] grid place-items-center overflow-hidden">
+    <div class="absolute inset-0 -z-0 opacity-40 bg-[radial-gradient(1200px_500px_at_50%_10%,rgba(255,216,139,.15),transparent_60%)]"></div>
+    <div class="absolute top-36 left-1/2 -translate-x-1/2 shimmer h-[2px] w-2/3 opacity-40 animate-shimmer"></div>
+
+    <div class="mx-auto max-w-5xl px-6 text-center">
+      <p class="uppercase tracking-[.35em] text-xs md:text-sm text-gold/80">Katsina • Northern Nigeria</p>
+      <h1 class="mt-4 font-display text-4xl md:text-6xl lg:text-7xl leading-tight">
+        A <span class="text-gold">Timeless</span> Celebration of Family & Love
+      </h1>
+      <p class="mt-6 text-base md:text-lg text-white/80 max-w-3xl mx-auto">
+        Honoring the noble families of <span class="text-gold/90">Katsina</span> as they unite hearts in a celebration that echoes beyond seasons. Crafted to never grow old, to glow with grace, and to inspire generations.
+      </p>
+      <div class="mt-10 flex items-center justify-center gap-4">
+        <a href="#timeline" class="rounded-2xl bg-gradient-to-r from-gold/80 to-royal-400/80 px-6 py-3 text-ink font-semibold shadow-glow hover:opacity-95 transition"><i class="fa-solid fa-heart"></i> View Timeline</a>
+        <a href="#gallery" class="rounded-2xl border border-gold/40 px-6 py-3 font-medium hover:bg-gold/10 transition"><i class="fa-solid fa-images"></i> Explore Gallery</a>
+      </div>
+      <div class="mt-12 text-xs text-white/60">Designed for eternity • Animated with care</div>
+    </div>
+  </section>
+
+  <!-- Story / Family -->
+  <section id="story" class="relative py-20">
+    <div class="mx-auto max-w-6xl px-6 grid lg:grid-cols-2 gap-10 items-start">
+      <div class="glass rounded-3xl p-8 md:p-10 shadow-soft">
+        <h2 class="font-display text-3xl md:text-4xl">Families & Honorees</h2>
+        <div class="mt-4 h-[2px] w-24 bg-gold/60"></div>
+        <div class="mt-6 space-y-4 text-white/85">
+          <p>
+            <span class="text-gold">Hajia Rabi</span>, beloved daughter of <span class="text-gold">Hajia Fatima Magajiya Abdulfatah</span>, and <span class="text-gold">Alhaji Yusuf Ibrahim</span> — wife of <span class="text-gold">Dr. Abubakar</span> — are celebrated in this union of grace and gratitude.
+          </p>
+          <p>
+            The wedding gathered relatives and friends from across states and countries, converging in <span class="text-gold">Katsina</span> to witness an unforgettable series of events filled with blessings, culture, and joy.
+          </p>
+        </div>
+        <div class="mt-8 grid grid-cols-2 gap-4 text-sm">
+          <div class="rounded-2xl border border-gold/20 p-4">
+            <div class="text-white/70">Venue</div>
+            <div class="font-semibold">Katsina, Nigeria</div>
+          </div>
+          <div class="rounded-2xl border border-gold/20 p-4">
+            <div class="text-white/70">Traditions</div>
+            <div class="font-semibold">Henna • Fatiha • Budan Kai</div>
+          </div>
+        </div>
+      </div>
+      <div class="glass rounded-3xl p-8 md:p-10 shadow-soft">
+        <h3 class="font-display text-2xl md:text-3xl">A Poetic Blessing</h3>
+        <p class="mt-4 text-white/80 leading-relaxed">
+          May this home be a lamp of mercy, a garden of patience, and a river of gentle speech. May its doors open to wisdom, its windows to gratitude, and its nights to prayers that rise like stars. May love here never fade, but echo softly—today, tomorrow, and forever.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3 text-[13px]">
+          <span class="rounded-full border border-gold/30 px-3 py-1">#Katsina</span>
+          <span class="rounded-full border border-gold/30 px-3 py-1">#NorthernElegance</span>
+          <span class="rounded-full border border-gold/30 px-3 py-1">#TimelessUnion</span>
+          <span class="rounded-full border border-gold/30 px-3 py-1">#Family</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section id="timeline" class="py-20">
+    <div class="mx-auto max-w-6xl px-6">
+      <h2 class="font-display text-3xl md:text-5xl text-center">Wedding Timeline</h2>
+      <p class="mt-3 text-center text-white/70">A four-day journey of joy, culture, and remembrance.</p>
+
+      <div class="relative mt-12">
+        <div class="absolute left-[calc(50%-1px)] top-0 bottom-0 w-[2px] bg-gradient-to-b from-gold/60 via-white/20 to-royal-500/60"></div>
+        <div class="space-y-10">
+          <!-- Day 1 -->
+          <div class="relative grid md:grid-cols-2 gap-6 items-stretch">
+            <div class="md:text-right md:pr-10">
+              <h3 class="font-display text-2xl">Day 1 • Friend Eve (Henna Night)</h3>
+              <p class="mt-2 text-white/75">A grand and memorable occasion in honor of their son <span class="text-gold">Abusafyan</span>. Joy, laughter, and intricate henna artistry—Sa Lallai.</p>
+              <div class="mt-2 text-xs text-white/60">Friday (Eve)</div>
+            </div>
+            <div class="glass rounded-2xl p-5 border-l-2 border-gold/30">
+              <div class="flex items-center gap-3 text-gold/90"><i class="fa-solid fa-hand-sparkles"></i><span>Henna • Friends Gathering</span></div>
+              <p class="mt-2 text-sm text-white/80">Music, light refreshments, and blessings shared among dear friends.</p>
+            </div>
+            <div class="absolute left-1/2 top-6 -translate-x-1/2 h-4 w-4 rounded-full bg-gold shadow-glow"></div>
+          </div>
+          <!-- Day 2 -->
+          <div class="relative grid md:grid-cols-2 gap-6 items-stretch">
+            <div class="glass rounded-2xl p-5 md:order-2 border-r-2 border-gold/30">
+              <div class="flex items-center gap-3 text-gold/90"><i class="fa-solid fa-people-roof"></i><span>Mothers Eve</span></div>
+              <p class="mt-2 text-sm text-white/80">A gathering of mothers with prayers, counsel, and celebration.</p>
+            </div>
+            <div class="md:pl-10 md:order-1">
+              <h3 class="font-display text-2xl">Day 2 • Mothers Eve</h3>
+              <p class="mt-2 text-white/75">An evening of warmth and blessings led by the mothers.</p>
+              <div class="mt-2 text-xs text-white/60">Thursday</div>
+            </div>
+            <div class="absolute left-1/2 top-6 -translate-x-1/2 h-4 w-4 rounded-full bg-gold shadow-glow"></div>
+          </div>
+          <!-- Day 3 -->
+          <div class="relative grid md:grid-cols-2 gap-6 items-stretch">
+            <div class="md:text-right md:pr-10">
+              <h3 class="font-display text-2xl">Day 3 • Wedding Fatiha & Traditional Songs</h3>
+              <p class="mt-2 text-white/75">Sacred vows by day; in the evening, the treasured <em>Katsina</em> traditional memoritis songs.</p>
+              <div class="mt-2 text-xs text-white/60">Friday (Fatiha & Evening Songs)</div>
+            </div>
+            <div class="glass rounded-2xl p-5 border-l-2 border-gold/30">
+              <div class="flex items-center gap-3 text-gold/90"><i class="fa-solid fa-mosque"></i><span>Fatiha • Culture • Songs</span></div>
+              <p class="mt-2 text-sm text-white/80">A day that sealed hearts and celebrated heritage.</p>
+            </div>
+            <div class="absolute left-1/2 top-6 -translate-x-1/2 h-4 w-4 rounded-full bg-gold shadow-glow"></div>
+          </div>
+          <!-- Day 4 -->
+          <div class="relative grid md:grid-cols-2 gap-6 items-stretch">
+            <div class="glass rounded-2xl p-5 md:order-2 border-r-2 border-gold/30">
+              <div class="flex items-center gap-3 text-gold/90"><i class="fa-solid fa-ring"></i><span>Budan Kai • Unveiling of the Bride</span></div>
+              <p class="mt-2 text-sm text-white/80">Sutura and elegance. A moment held in golden memory.</p>
+            </div>
+            <div class="md:pl-10 md:order-1">
+              <h3 class="font-display text-2xl">Day 4 • Sutura / Budan Kai</h3>
+              <p class="mt-2 text-white/75">Family rejoicing and prayers for a blessed home.</p>
+              <div class="mt-2 text-xs text-white/60">Saturday</div>
+            </div>
+            <div class="absolute left-1/2 top-6 -translate-x-1/2 h-4 w-4 rounded-full bg-gold shadow-glow"></div>
+          </div>
+        </div>
+
+        <div class="mt-12 text-center text-white/70 text-sm">Guests departed with joy to Kano, Kaduna, and beyond. <span class="text-gold/80">July 24 (Thursday Mothers Day) • Friday Wedding</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery" class="py-20">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <div>
+          <h2 class="font-display text-3xl md:text-5xl">Eternal Gallery</h2>
+          <p class="mt-2 text-white/70">90 treasured moments • Two perspectives • One story.</p>
+        </div>
+        <div class="glass rounded-2xl p-2 flex items-center gap-2">
+          <button data-filter="all" class="tab-btn active rounded-xl px-4 py-2 hover:bg-gold/10">All</button>
+          <button data-filter="male" class="tab-btn rounded-xl px-4 py-2 hover:bg-gold/10"><i class="fa-solid fa-user-tie mr-1"></i> Male Side</button>
+          <button data-filter="female" class="tab-btn rounded-xl px-4 py-2 hover:bg-gold/10"><i class="fa-solid fa-person-dress mr-1"></i> Female Side</button>
+        </div>
+      </div>
+
+      <div class="masonry mt-10" id="galleryGrid">
+        <!-- SAMPLE IMAGES. Replace with your 90 images. Use data-group="male|female". -->
+        <!-- Tip: Put real image paths like images/male/01.jpg, etc. -->
+      </div>
+      <div class="mt-6 text-center text-xs text-white/60">Tip: Replace sample images with your real photos; keep <code>data-group</code> to enable filtering.</div>
+    </div>
+  </section>
+
+  <!-- Blessing / Footer -->
+  <section id="blessing" class="relative py-24">
+    <div class="mx-auto max-w-5xl px-6 text-center">
+      <div class="inline-block rounded-3xl glass px-8 py-10 shadow-soft">
+        <h3 class="font-display text-3xl md:text-4xl">May Love Echo Till Eternity</h3>
+        <p class="mt-4 text-white/80">
+          From the first henna glow to the last farewell, may this union be a lighthouse for generations—rooted in faith, crowned in mercy, and bright with gratitude.
+        </p>
+        <div class="mt-6 flex items-center justify-center gap-4 text-gold/90 text-xl">
+          <i class="fa-solid fa-heart"></i>
+          <i class="fa-solid fa-ring"></i>
+          <i class="fa-solid fa-dove"></i>
+          <i class="fa-solid fa-mosque"></i>
+        </div>
+      </div>
+      <div class="mt-10 text-xs text-white/50">Crafted with care • Share with pride • Built to never fade</div>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox-backdrop" id="lightbox">
+    <button id="lightboxPrev" class="absolute left-6 top-1/2 -translate-y-1/2 text-3xl text-white/70 hover:text-white"><i class="fa-solid fa-chevron-left"></i></button>
+    <img id="lightboxImg" class="lightbox-img" alt="Preview" />
+    <button id="lightboxNext" class="absolute right-6 top-1/2 -translate-y-1/2 text-3xl text-white/70 hover:text-white"><i class="fa-solid fa-chevron-right"></i></button>
+    <button id="lightboxClose" class="absolute top-6 right-6 text-2xl text-white/70 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+
+  <!-- Ambient audio (optional) -->
+  <audio id="ambient" loop>
+    <!-- Replace with your gentle instrumental mp3 if desired -->
+  </audio>
+
+  <script>
+    // Smooth scroll (Lenis)
+    const lenis = new Lenis({
+      lerp: 0.08,
+      smoothWheel: true,
+    });
+    function raf(time){ lenis.raf(time); requestAnimationFrame(raf) }
+    requestAnimationFrame(raf);
+
+    // GSAP entrances
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray('section').forEach((sec, i)=>{
+      gsap.from(sec.querySelectorAll('h1,h2,h3,p,.glass,.masonry,button,a'),{
+        opacity:0, y:20, duration:0.8, stagger:0.04,
+        scrollTrigger:{ trigger: sec, start:'top 80%' }
+      })
+    })
+
+    // Particle stars
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    let w, h, particles;
+    function resize(){ w = canvas.width = innerWidth; h = canvas.height = innerHeight; initParticles() }
+    addEventListener('resize', resize);
+    function initParticles(){
+      particles = Array.from({length: Math.min(180, Math.floor(w*h/12000))}, ()=>({
+        x: Math.random()*w,
+        y: Math.random()*h,
+        r: Math.random()*1.4+0.4,
+        a: Math.random()*Math.PI*2,
+        s: Math.random()*0.4+0.1
+      }))
+    }
+    function draw(){
+      ctx.clearRect(0,0,w,h);
+      for(const p of particles){
+        p.a += 0.003; // drift
+        p.x += Math.cos(p.a)*p.s; p.y += Math.sin(p.a)*p.s;
+        if(p.x<0) p.x=w; if(p.x>w) p.x=0; if(p.y<0) p.y=h; if(p.y>h) p.y=0;
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle = 'rgba(255,216,139,.55)'; ctx.fill();
+      }
+      requestAnimationFrame(draw)
+    }
+    resize(); draw();
+
+    // Ambient toggle
+    const audio = document.getElementById('ambient');
+    const audioBtn = document.getElementById('audioToggle');
+    let audioOn = false;
+    audioBtn.addEventListener('click', async ()=>{
+      try{
+        if(!audioOn){ await audio.play(); audioOn=true; audioBtn.classList.add('bg-gold/10') }
+        else { audio.pause(); audioOn=false; audioBtn.classList.remove('bg-gold/10') }
+      }catch(e){ console.log(e) }
+    })
+
+    // Build sample gallery (replace these with your real 90 images)
+    const sampleMale = Array.from({length: 24}, (_,i)=>`https://images.unsplash.com/photo-15${60+i}0123-0a0a0a0a0a0a?auto=format&fit=crop&w=1200&q=60`);
+    const sampleFemale = Array.from({length: 24}, (_,i)=>`https://images.unsplash.com/photo-15${70+i}0456-0b0b0b0b0b0b?auto=format&fit=crop&w=1200&q=60`);
+    // fallback if unsplash urls 404: use Picsum
+    const fallback = idx => `https://picsum.photos/seed/wedding-${idx}/1600/1000`;
+
+    const totalDesired = 48; // show 48 samples now; you will replace with 90
+    const grid = document.getElementById('galleryGrid');
+    let all = [];
+    for(let i=0;i<totalDesired;i++){
+      const isMale = i%2===0; // alternate groups visually
+      const url = (isMale ? sampleMale[i%sampleMale.length] : sampleFemale[i%sampleFemale.length]) || fallback(i);
+      const item = document.createElement('figure');
+      item.className = 'masonry-item group relative overflow-hidden rounded-2xl border border-gold/10 shadow-soft';
+      item.dataset.group = isMale ? 'male' : 'female';
+      item.innerHTML = `
+        <img src="${url}" alt="Wedding memory" class="w-full object-cover transition duration-500 group-hover:scale-[1.03]"/>
+        <figcaption class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition p-4 flex items-end">
+          <span class="text-xs text-white/85">Click to view</span>
+        </figcaption>`
+      grid.appendChild(item);
+      all.push(item);
+    }
+
+    // Filter tabs
+    const tabs = document.querySelectorAll('.tab-btn');
+    tabs.forEach(btn=>btn.addEventListener('click', ()=>{
+      tabs.forEach(b=>b.classList.remove('bg-gold/10','text-gold'));
+      btn.classList.add('bg-gold/10','text-gold');
+      const f = btn.dataset.filter;
+      all.forEach(card=>{
+        if(f==='all' || card.dataset.group===f){ card.style.display='inline-block' }
+        else { card.style.display='none' }
+      })
+    }))
+
+    // Lightbox logic
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightboxImg');
+    const prev = document.getElementById('lightboxPrev');
+    const next = document.getElementById('lightboxNext');
+    const close = document.getElementById('lightboxClose');
+    let currentIndex = 0;
+
+    function openLB(idx){ currentIndex = idx; lbImg.src = all[idx].querySelector('img').src; lb.classList.add('open') }
+    function navigate(step){
+      const visible = all.filter(el=>el.style.display!=="none");
+      const currentVisibleIndex = visible.indexOf(all[currentIndex]);
+      const nextIndex = (currentVisibleIndex + step + visible.length) % visible.length;
+      const globalIndex = all.indexOf(visible[nextIndex]);
+      openLB(globalIndex);
+    }
+
+    all.forEach((el, idx)=>{
+      el.addEventListener('click', ()=> openLB(idx));
+    })
+    prev.addEventListener('click', ()=> navigate(-1))
+    next.addEventListener('click', ()=> navigate(1))
+    close.addEventListener('click', ()=> lb.classList.remove('open'))
+    lb.addEventListener('click', (e)=>{ if(e.target===lb) lb.classList.remove('open') })
+
+    // Utility: replace images programmatically later
+    // Example to load your 90 images:
+    // const yourMale = ['images/male/01.jpg', ...];
+    // const yourFemale = ['images/female/01.jpg', ...];
+    // Then rebuild grid similarly to above.
+  </script>
+</body>
+</html>

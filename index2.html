@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abusafyan & His Bride - A Royal Katsina Wedding</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: '#D4AF37',
+                        cream: '#F8F0E3',
+                        burgundy: '#800020',
+                        navy: '#0F2C59',
+                        ivory: '#FFFFF0',
+                        royal: '#1A103D'
+                    },
+                    fontFamily: {
+                        display: ['Playfair Display', 'serif'],
+                        body: ['Montserrat', 'sans-serif'],
+                        script: ['Great Vibes', 'cursive']
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(212, 175, 55, 0.8), 0 0 60px rgba(212, 175, 55, 0.6); }
+        }
+        
+        @keyframes text-glow {
+            0%, 100% { text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); }
+            50% { text-shadow: 0 0 20px rgba(212, 175, 55, 0.8), 0 0 30px rgba(212, 175, 55, 0.6); }
+        }
+        
+        body {
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #0F2C59, #1A103D);
+        }
+        
+        .hero-bg {
+            background: linear-gradient(rgba(15, 44, 89, 0.7), rgba(26, 16, 61, 0.9)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%23D4AF37" opacity="0.2" width="10" height="10"/><path fill="%23F8F0E3" opacity="0.1" d="M0 0h10L0 10z"/></svg>');
+            background-size: cover;
+            background-position: center;
+            margin-top: 100px;
+        }
+        
+        .gold-gradient {
+            background: linear-gradient(135deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+        }
+        
+        .floral-border {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none"><path fill="%23D4AF37" d="M0,0 C30,10 70,10 100,0 L100,10 L0,10 Z"/></svg>');
+            background-repeat: repeat-x;
+            background-position: bottom;
+            background-size: 200px 10px;
+        }
+        
+        .section-fade-in {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        
+        .is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .parallax-container {
+            perspective: 1px;
+            height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        
+        .parallax-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        
+        .parallax-back {
+            transform: translateZ(-1px) scale(2);
+        }
+        
+        .parallax-base {
+            transform: translateZ(0);
+        }
+        
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-10px) rotate3d(1, 0, 0, 10deg);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        
+        .gallery-item img {
+            transition: transform 0.7s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.2);
+        }
+        
+        .countdown-number {
+            position: relative;
+            background: linear-gradient(135deg, #0F2C59, #1E3A8A);
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            animation: glow 3s infinite;
+            transform-style: preserve-3d;
+            transform: translateZ(20px);
+        }
+        
+        .countdown-number::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            border: 2px solid #D4AF37;
+            animation: pulse 2s infinite;
+        }
+        
+        .floating-hearts:before {
+            content: "❤";
+            position: absolute;
+            color: rgba(212, 175, 55, 0.7);
+            font-size: 24px;
+            animation: float 6s ease-in-out infinite;
+            filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5));
+        }
+        
+        .hearts-1:before { top: 10%; left: 10%; animation-delay: 0s; }
+        .hearts-2:before { top: 20%; right: 15%; animation-delay: 1s; }
+        .hearts-3:before { bottom: 30%; left: 15%; animation-delay: 2s; }
+        .hearts-4:before { bottom: 20%; right: 10%; animation-delay: 3s; }
+        .hearts-5:before { top: 40%; left: 20%; animation-delay: 4s; }
+        .hearts-6:before { top: 60%; right: 20%; animation-delay: 5s; }
+        
+        .floating-rings:before {
+            content: "◯";
+            position: absolute;
+            color: rgba(212, 175, 55, 0.5);
+            font-size: 30px;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .rings-1:before { top: 15%; left: 5%; animation-delay: 0.5s; }
+        .rings-2:before { top: 25%; right: 5%; animation-delay: 1.5s; }
+        .rings-3:before { bottom: 35%; left: 5%; animation-delay: 2.5s; }
+        .rings-4:before { bottom: 25%; right: 5%; animation-delay: 3.5s; }
+        
+        .card-3d {
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+            transition: transform 0.5s ease;
+        }
+        
+        .card-3d:hover {
+            transform: perspective(1000px) rotateY(10deg) rotateX(5deg) translateZ(20px);
+        }
+        
+        .text-glow {
+            animation: text-glow 3s infinite;
+        }
+        
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .flip-card {
+            perspective: 1000px;
+            height: 300px;
+        }
+        
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+        
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(to bottom, #D4AF37, #800020);
+        }
+        
+        .timeline-item:after {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #D4AF37;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
+        }
+    </style>
+</head>
+<body class="font-body text-ivory">
+    <!-- 3D Background Elements -->
+    <div id="particles-js"></div>
+    <div class="floating-hearts hearts-1"></div>
+    <div class="floating-hearts hearts-2"></div>
+    <div class="floating-hearts hearts-3"></div>
+    <div class="floating-hearts hearts-4"></div>
+    <div class="floating-hearts hearts-5"></div>
+    <div class="floating-hearts hearts-6"></div>
+    <div class="floating-rings rings-1"></div>
+    <div class="floating-rings rings-2"></div>
+    <div class="floating-rings rings-3"></div>
+    <div class="floating-rings rings-4"></div>
+
+    <!-- Hero Section with 3D Effect -->
+    <header class="min-h-screen hero-bg flex items-center justify-center text-center relative  overflow-hidden">
+        <div class="content-wrapper px-4 max-w-4xl">
+            <h4 class="font-script text-3xl md:text-4xl mb-2 text-gold">The Wedding Celebration of</h4>
+            <h1 class="font-display text-5xl md:text-7xl mb-4 text-glow">Abusafyan</h1>
+            <div class="flex items-center justify-center my-6">
+                <div class="h-px w-16 bg-gold mx-4"></div>
+                <i class="fas fa-heart text-gold text-2xl animate-pulse"></i>
+                <div class="h-px w-16 bg-gold mx-4"></div>
+            </div>
+            <h1 class="font-display text-5xl md:text-7xl mb-8 text-glow">& His Bride</h1>
+            <p class="text-xl mb-10">Join us as we celebrate this beautiful union</p>
+            <p class="text-2xl font-light mb-2">24th - 27th July, 2023</p>
+            <p class="text-xl">Katsina, Nigeria</p>
+            
+            <!-- 3D Countdown Timer -->
+            <div class="mt-16 flex flex-wrap justify-center gap-6">
+                <div class="flex flex-col items-center">
+                    <div class="countdown-number">
+                        <span id="days">00</span>
+                    </div>
+                    <span class="mt-2">Days</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="countdown-number">
+                        <span id="hours">00</span>
+                    </div>
+                    <span class="mt-2">Hours</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="countdown-number">
+                        <span id="minutes">00</span>
+                    </div>
+                    <span class="mt-2">Minutes</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="countdown-number">
+                        <span id="seconds">00</span>
+                    </div>
+                    <span class="mt-2">Seconds</span>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 floral-border h-12"></div>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i class="fas fa-chevron-down text-gold text-2xl"></i>
+        </div>
+    </header>
+
+    <!-- 3D Introduction Section -->
+    <section class="py-20 px-4 relative bg-royal">
+        <div class="max-w-4xl mx-auto text-center section-fade-in">
+            <h2 class="font-display text-3xl md:text-4xl mb-6 text-gold">A Royal Celebration</h2>
+            <div class="h-px w-24 bg-gold mx-auto mb-10"></div>
+            <p class="text-lg mb-6">With great joy and happiness, the families of</p>
+            <p class="font-display text-xl text-gold mb-2">Hajia Rabi (Daughter of Hajia Fatima Magajiya Abdulfatah and Alhaji Yusuf Ibrahim)</p>
+            <p class="text-lg mb-8">and</p>
+            <p class="font-display text-xl text-gold mb-10">Dr. Abubakar</p>
+            <p class="text-lg">request the pleasure of your company at the wedding celebration of their son</p>
+            <p class="font-script text-4xl text-gold my-8 animate-pulse">Abusafyan</p>
+            <p class="text-lg">This joyous occasion will bring together relatives from different states and countries to celebrate love, family, and tradition in beautiful Katsina.</p>
+        </div>
+    </section>
+
+    <!-- 3D Timeline Section -->
+    <section class="py-20 px-4 bg-navy text-ivory relative">
+        <div class="max-w-4xl mx-auto section-fade-in">
+            <h2 class="font-display text-3xl md:text-4xl mb-6 text-center text-gold">Wedding Events</h2>
+            <div class="h-px w-24 bg-gold mx-auto mb-16"></div>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- 3D Flip Cards for Events -->
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front gold-gradient rounded-lg flex flex-col items-center justify-center p-6 text-navy">
+                            <i class="fas fa-heart text-4xl mb-4"></i>
+                            <h3 class="font-display text-2xl">Thursday, July 24th</h3>
+                            <p class="text-center">Mothers Eve</p>
+                        </div>
+                        <div class="flip-card-back bg-burgundy rounded-lg flex flex-col items-center justify-center p-6">
+                            <h3 class="font-display text-2xl text-gold">Mothers Eve</h3>
+                            <p class="text-center mt-4">A special evening dedicated to all the mothers celebrating this union.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-back gold-gradient rounded-lg flex flex-col items-center justify-center p-6 text-navy">
+                            <i class="fas fa-heart text-4xl mb-4"></i>
+                            <h3 class="font-display text-2xl">Thursday, July 24th</h3>
+                            <p class="text-center">Mothers Eve</p>
+                        </div>
+                        <div class="flip-card-front bg-burgundy rounded-lg flex flex-col items-center justify-center p-6">
+                            <h3 class="font-display text-2xl text-gold">Mothers Eve</h3>
+                            <p class="text-center mt-4">A special evening dedicated to all the mothers celebrating this union.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front gold-gradient rounded-lg flex flex-col items-center justify-center p-6 text-navy">
+                            <i class="fas fa-ring text-4xl mb-4"></i>
+                            <h3 class="font-display text-2xl">Friday, July 25th</h3>
+                            <p class="text-center">Wedding Fatiha</p>
+                        </div>
+                        <div class="flip-card-back bg-burgundy rounded-lg flex flex-col items-center justify-center p-6">
+                            <h3 class="font-display text-2xl text-gold">Wedding Fatiha & Traditional Songs</h3>
+                            <p class="text-center mt-4">The official wedding ceremony followed by an evening of traditional Katsina music.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-back gold-gradient rounded-lg flex flex-col items-center justify-center p-6 text-navy">
+                            <i class="fas fa-ring text-4xl mb-4"></i>
+                            <h3 class="font-display text-2xl">Friday, July 25th</h3>
+                            <p class="text-center">Wedding Fatiha</p>
+                        </div>
+                        <div class="flip-card-front bg-burgundy rounded-lg flex flex-col items-center justify-center p-6">
+                            <h3 class="font-display text-2xl text-gold">Wedding Fatiha & Traditional Songs</h3>
+                            <p class="text-center mt-4">The official wedding ceremony followed by an evening of traditional Katsina song.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front gold-gradient rounded-lg flex flex-col items-center justify-center p-6 text-navy">
+                            <i class="fas fa-glass-cheers text-4xl mb-4"></i>
+                            <h3 class="font-display text-2xl">Saturday, July 26th</h3>
+                            <p class="text-center">Unbedding of the Bride</p>
+                        </div>
+                        <div class="flip-card-back bg-burgundy rounded-lg flex flex-col items-center justify-center p-6">
+                            <h3 class="font-display text-2xl text-gold">Unbedding of the Bride (Budan Kai)</h3>
+                            <p class="text-center mt-4">A traditional ceremony to welcome the bride to her new home.</p>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-back gold-gradient rounded-lg flex flex-col items-center justify-center p-6 text-navy">
+                            <i class="fas fa-glass-cheers text-4xl mb-4"></i>
+                            <h3 class="font-display text-2xl">Saturday, July 26th</h3>
+                            <p class="text-center">Unbedding of the Bride</p>
+                        </div>
+                        <div class="flip-card-front bg-burgundy rounded-lg flex flex-col items-center justify-center p-6">
+                            <h3 class="font-display text-2xl text-gold">Unbedding of the Bride (Budan Kai)</h3>
+                            <p class="text-center mt-4">A traditional ceremony to welcome the bride to her new home.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front gold-gradient rounded-lg flex flex-col items-center justify-center p-6 text-navy">
+                            <i class="fas fa-gift text-4xl mb-4"></i>
+                            <h3 class="font-display text-2xl">Sunday, July 27th</h3>
+                            <p class="text-center">Departure of Guests</p>
+                        </div>
+                        <div class="flip-card-back bg-burgundy rounded-lg flex flex-col items-center justify-center p-6">
+                            <h3 class="font-display text-2xl text-gold">Departure of Guests</h3>
+                            <p class="text-center mt-4">Farewell to our beloved guests traveling back to Kano, Kaduna, and beyond.</p>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-back gold-gradient rounded-lg flex flex-col items-center justify-center p-6 text-navy">
+                            <i class="fas fa-gift text-4xl mb-4"></i>
+                            <h3 class="font-display text-2xl">Sunday, July 27th</h3>
+                            <p class="text-center">Departure of Guests</p>
+                        </div>
+                        <div class="flip-card-front bg-burgundy rounded-lg flex flex-col items-center justify-center p-6">
+                            <h3 class="font-display text-2xl text-gold">Departure of Guests</h3>
+                            <p class="text-center mt-4">Farewell to our beloved guests traveling back to Kano, Kaduna, and beyond.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3D Gallery Section -->
+    <section class="py-20 px-4 bg-royal">
+        <div class="max-w-6xl mx-auto section-fade-in">
+            <h2 class="font-display text-3xl md:text-4xl mb-6 text-center text-gold">Precious Memories</h2>
+            <div class="h-px w-24 bg-gold mx-auto mb-16"></div>
+            
+            <div class="mb-16">
+                <h3 class="text-2xl font-display text-gold text-center mb-8">Male Parent's Section</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                    <!-- Gallery items with 3D effect -->
+                    <div class="gallery-item h-64 bg-gradient-to-r from-navy to-burgundy rounded-lg flex items-center justify-center">
+                        <span class="text-white">Wedding Day Photo 1</span>
+                    </div>
+                    <div class="gallery-item h-64 bg-gradient-to-r from-gold to-burgundy rounded-lg flex items-center justify-center">
+                        <span class="text-white">Wedding Day Photo 2</span>
+                    </div>
+                    <div class="gallery-item h-64 bg-gradient-to-r from-burgundy to-navy rounded-lg flex items-center justify-center">
+                        <span class="text-white">Wedding Day Photo 3</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="text-2xl font-display text-gold text-center mb-8">Female Parent's Section</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                    <!-- Gallery items with 3D effect -->
+                    <div class="gallery-item h-64 bg-gradient-to-r from-navy to-gold rounded-lg flex items-center justify-center">
+                        <span class="text-white">Dinner Photo 1</span>
+                    </div>
+                    <div class="gallery-item h-64 bg-gradient-to-r from-gold to-navy rounded-lg flex items-center justify-center">
+                        <span class="text-white">Dinner Photo 2</span>
+                    </div>
+                    <div class="gallery-item h-64 bg-gradient-to-r from-burgundy to-gold rounded-lg flex items-center justify-center">
+                        <span class="text-white">Dinner Photo 3</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <button class="px-8 py-3 bg-gold text-navy rounded-full font-semibold hover:bg-burgundy hover:text-ivory transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    View Full Gallery
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3D Family Section -->
+    <section class="py-20 px-4 bg-gradient-to-b from-navy to-royal">
+        <div class="max-w-4xl mx-auto section-fade-in">
+            <h2 class="font-display text-3xl md:text-4xl mb-6 text-center text-gold">Our Families</h2>
+            <div class="h-px w-24 bg-gold mx-auto mb-16"></div>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="card-3d bg-burgundy p-8 rounded-xl shadow-2xl">
+                    <div class="w-32 h-32 mx-auto mb-6 rounded-full gold-gradient flex items-center justify-center">
+                        <i class="fas fa-crown text-4xl text-navy"></i>
+                    </div>
+                    <h3 class="font-display text-2xl text-gold mb-4 text-center">Groom's Family</h3>
+                    <p class="mb-2 text-center">Dr. Abubakar</p>
+                    <p class="mb-2 text-center">And</p>
+                    <p class="text-center">Their son Abusafyan</p>
+                </div>
+                
+                <div class="card-3d bg-burgundy p-8 rounded-xl shadow-2xl">
+                    <div class="w-32 h-32 mx-auto mb-6 rounded-full gold-gradient flex items-center justify-center">
+                        <i class="fas fa-crown text-4xl text-navy"></i>
+                    </div>
+                    <h3 class="font-display text-2xl text-gold mb-4 text-center">Bride's Family</h3>
+                    <p class="mb-2 text-center">Hajia Rabi</p>
+                    <p class="mb-2 text-center">Daughter of Hajia Fatima Magajiya Abdulfatah</p>
+                    <p class="text-center">And Alhaji Yusuf Ibrahim</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3D Blessings Section -->
+    <section class="py-20 px-4 relative bg-navy">
+        <div class="max-w-4xl mx-auto text-center section-fade-in">
+            <i class="fas fa-quote-left text-gold text-5xl mb-8 opacity-50"></i>
+            <h2 class="font-display text-3xl md:text-4xl mb-6 text-gold">Blessings & Good Wishes</h2>
+            <div class="h-px w-24 bg-gold mx-auto mb-10"></div>
+            <p class="text-xl italic mb-12">May your marriage be filled with love, understanding, and countless moments of joy. As you build your life together, may you always find strength in each other and in the love of your families.</p>
+            <div class="font-script text-4xl text-gold animate-pulse">Abusafyan & His Bride</div>
+        </div>
+    </section>
+
+    <!-- 3D Footer -->
+    <footer class="py-12 px-4 bg-royal text-ivory text-center">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex justify-center space-x-6 mb-8">
+                <a href="#" class="w-12 h-12 rounded-full gold-gradient flex items-center justify-center transform transition-transform duration-300 hover:scale-110">
+                    <i class="fab fa-facebook-f text-navy"></i>
+                </a>
+                <a href="#" class="w-12 h-12 rounded-full gold-gradient flex items-center justify-center transform transition-transform duration-300 hover:scale-110">
+                    <i class="fab fa-instagram text-navy"></i>
+                </a>
+                <a href="#" class="w-12 h-12 rounded-full gold-gradient flex items-center justify-center transform transition-transform duration-300 hover:scale-110">
+                    <i class="fab fa-twitter text-navy"></i>
+                </a>
+                <a href="#" class="w-12 h-12 rounded-full gold-gradient flex items-center justify-center transform transition-transform duration-300 hover:scale-110">
+                    <i class="fab fa-whatsapp text-navy"></i>
+                </a>
+            </div>
+            <p class="mb-4 text-gold font-semibold">#AbusafyanWedding #KatsinaRoyalWedding</p>
+            <p class="text-gold">Designed with ❤️ for eternity</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize particles.js
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#D4AF37" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#D4AF37",
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "repulse" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                }
+            },
+            retina_detect: true
+        });
+
+        // Countdown timer
+        function updateCountdown() {
+            const weddingDate = new Date('2023-07-24').getTime();
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+            
+            if (distance < 0) {
+                document.getElementById('days').innerText = '00';
+                document.getElementById('hours').innerText = '00';
+                document.getElementById('minutes').innerText = '00';
+                document.getElementById('seconds').innerText = '00';
+                return;
+            }
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').innerText = days.toString().padStart(2, '0');
+            document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        
+        // Scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Animate sections on scroll
+            gsap.utils.toArray('.section-fade-in').forEach(section => {
+                gsap.to(section, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 80%',
+                        toggleActions: 'play none none none'
+                    }
+                });
+            });
+            
+            // Parallax effect for hero section
+            gsap.to('.hero-bg', {
+                yPercent: -20,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '.hero-bg',
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: true
+                }
+            });
+        });
+        
+        // Mouse move parallax effect
+        document.addEventListener('mousemove', function(e) {
+            const moveX = (e.clientX - window.innerWidth / 2) / 50;
+            const moveY = (e.clientY - window.innerHeight / 2) / 50;
+            
+            gsap.to('.floating-hearts:before', {
+                x: moveX,
+                y: moveY,
+                duration: 1
+            });
+            
+            gsap.to('.floating-rings:before', {
+                x: -moveX,
+                y: -moveY,
+                duration: 1
+            });
+            
+            gsap.to('.countdown-number', {
+                x: moveX / 5,
+                y: moveY / 5,
+                duration: 1
+            });
+        });
+    </script>
+</body>
+</html>

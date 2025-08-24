@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abusafyan & His Bride - A Royal Katsina Wedding</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: '#D4AF37',
+                        cream: '#F8F0E3',
+                        burgundy: '#800020',
+                        navy: '#0F2C59',
+                        ivory: '#FFFFF0'
+                    },
+                    fontFamily: {
+                        display: ['Playfair Display', 'serif'],
+                        body: ['Montserrat', 'sans-serif'],
+                        script: ['Great Vibes', 'cursive']
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .hero-bg {
+            background: linear-gradient(rgba(15, 44, 89, 0.7), rgba(128, 0, 32, 0.7)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%23D4AF37" opacity="0.2" width="10" height="10"/><path fill="%23F8F0E3" opacity="0.1" d="M0 0h10L0 10z"/></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .floral-border {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none"><path fill="%23D4AF37" d="M0,0 C30,10 70,10 100,0 L100,10 L0,10 Z"/></svg>');
+            background-repeat: repeat-x;
+            background-position: bottom;
+            background-size: 200px 10px;
+        }
+        
+        .gold-gradient {
+            background: linear-gradient(135deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+        }
+        
+        .section-fade-in {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .gallery-item img {
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .countdown-number {
+            position: relative;
+            background: linear-gradient(135deg, #0F2C59, #1E3A8A);
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .countdown-number::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            border: 2px solid #D4AF37;
+            animation: pulse 2s infinite;
+        }
+        
+        .floating-hearts:before {
+            content: "❤";
+            position: absolute;
+            color: rgba(212, 175, 55, 0.5);
+            font-size: 20px;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .hearts-1:before { top: 10%; left: 10%; animation-delay: 0s; }
+        .hearts-2:before { top: 20%; right: 15%; animation-delay: 1s; }
+        .hearts-3:before { bottom: 30%; left: 15%; animation-delay: 2s; }
+        .hearts-4:before { bottom: 20%; right: 10%; animation-delay: 3s; }
+        .hearts-5:before { top: 40%; left: 20%; animation-delay: 4s; }
+        
+        .is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-cream font-body text-navy">
+    <!-- Floating hearts background elements -->
+    <div class="floating-hearts hearts-1"></div>
+    <div class="floating-hearts hearts-2"></div>
+    <div class="floating-hearts hearts-3"></div>
+    <div class="floating-hearts hearts-4"></div>
+    <div class="floating-hearts hearts-5"></div>
+
+    <!-- Hero Section -->
+    <header class="min-h-screen hero-bg flex items-center justify-center text-center text-ivory relative overflow-hidden">
+        <div class="absolute inset-0 gold-gradient opacity-10"></div>
+        <div class="relative z-10 px-4 max-w-4xl">
+            <h4 class="font-script text-3xl md:text-4xl mb-2">The Wedding Celebration of</h4>
+            <h1 class="font-display text-5xl md:text-7xl mb-4">Abusafyan</h1>
+            <div class="flex items-center justify-center my-6">
+                <div class="h-px w-16 bg-gold mx-4"></div>
+                <i class="fas fa-heart text-gold text-2xl"></i>
+                <div class="h-px w-16 bg-gold mx-4"></div>
+            </div>
+            <h1 class="font-display text-5xl md:text-7xl mb-8">& His Bride</h1>
+            <p class="text-xl mb-10">Join us as we celebrate this beautiful union</p>
+            <p class="text-2xl font-light mb-2">24th - 27th July, 2023</p>
+            <p class="text-xl">Katsina, Nigeria</p>
+            
+            <!-- Countdown Timer -->
+            <div class="mt-16 flex flex-wrap justify-center gap-4">
+                <div class="flex flex-col items-center">
+                    <div class="countdown-number">
+                        <span id="days">00</span>
+                    </div>
+                    <span class="mt-2">Days</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="countdown-number">
+                        <span id="hours">00</span>
+                    </div>
+                    <span class="mt-2">Hours</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="countdown-number">
+                        <span id="minutes">00</span>
+                    </div>
+                    <span class="mt-2">Minutes</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="countdown-number">
+                        <span id="seconds">00</span>
+                    </div>
+                    <span class="mt-2">Seconds</span>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 floral-border h-12"></div>
+    </header>
+
+    <!-- Introduction Section -->
+    <section class="py-20 px-4 relative">
+        <div class="max-w-4xl mx-auto text-center section-fade-in">
+            <h2 class="font-display text-3xl md:text-4xl mb-6">A Royal Celebration</h2>
+            <div class="h-px w-24 bg-gold mx-auto mb-10"></div>
+            <p class="text-lg mb-6">With great joy and happiness, the families of</p>
+            <p class="font-display text-xl text-burgundy mb-2">Hajia Rabi (Daughter of Hajia Fatima Magajiya Abdulfatah and Alhaji Yusuf Ibrahim)</p>
+            <p class="text-lg mb-8">and</p>
+            <p class="font-display text-xl text-burgundy mb-10">Dr. Abubakar</p>
+            <p class="text-lg">request the pleasure of your company at the wedding celebration of their son</p>
+            <p class="font-script text-3xl text-gold my-8">Abusafyan</p>
+            <p class="text-lg">This joyous occasion will bring together relatives from different states and countries to celebrate love, family, and tradition in beautiful Katsina.</p>
+        </div>
+    </section>
+
+    <!-- Events Timeline -->
+    <section class="py-20 px-4 bg-navy text-ivory relative">
+        <div class="max-w-4xl mx-auto section-fade-in">
+            <h2 class="font-display text-3xl md:text-4xl mb-6 text-center">Wedding Events</h2>
+            <div class="h-px w-24 bg-gold mx-auto mb-16"></div>
+            
+            <div class="relative">
+                <!-- Vertical line -->
+                <div class="absolute left-4 md:left-1/2 h-full w-1 bg-gold transform -translate-x-1/2"></div>
+                
+                <!-- Event 1 -->
+                <div class="mb-12 flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0 order-2 md:order-1">
+                        <h3 class="font-display text-2xl text-gold">Thursday, July 24th</h3>
+                        <h4 class="text-xl mb-2">Mothers Eve</h4>
+                        <p>A special evening dedicated to all the mothers celebrating this union.</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-full gold-gradient flex items-center justify-center order-1 md:order-2 z-10">
+                        <i class="fas fa-heart text-navy"></i>
+                    </div>
+                    <div class="md:w-1/2 md:pl-12 order-3"></div>
+                </div>
+                
+                <!-- Event 2 -->
+                <div class="mb-12 flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 md:pr-12 order-2"></div>
+                    <div class="w-10 h-10 rounded-full gold-gradient flex items-center justify-center order-1 z-10">
+                        <i class="fas fa-ring text-navy"></i>
+                    </div>
+                    <div class="md:w-1/2 md:pl-12 md:text-left mb-4 md:mb-0 order-3">
+                        <h3 class="font-display text-2xl text-gold">Friday, July 25th</h3>
+                        <h4 class="text-xl mb-2">Wedding Fatiha & Traditional Songs</h4>
+                        <p>The official wedding ceremony followed by an evening of traditional Katsina music.</p>
+                    </div>
+                </div>
+                
+                <!-- Event 3 -->
+                <div class="mb-12 flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0 order-2 md:order-1">
+                        <h3 class="font-display text-2xl text-gold">Saturday, July 26th</h3>
+                        <h4 class="text-xl mb-2">Unbedding of the Bride (Budan Kai)</h4>
+                        <p>A traditional ceremony to welcome the bride to her new home.</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-full gold-gradient flex items-center justify-center order-1 md:order-2 z-10">
+                        <i class="fas fa-glass-cheers text-navy"></i>
+                    </div>
+                    <div class="md:w-1/2 md:pl-12 order-3"></div>
+                </div>
+                
+                <!-- Event 4 -->
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 md:pr-12 order-2"></div>
+                    <div class="w-10 h-10 rounded-full gold-gradient flex items-center justify-center order-1 z-10">
+                        <i class="fas fa-gift text-navy"></i>
+                    </div>
+                    <div class="md:w-1/2 md:pl-12 md:text-left mb-4 md:mb-0 order-3">
+                        <h3 class="font-display text-2xl text-gold">Sunday, July 27th</h3>
+                        <h4 class="text-xl mb-2">Departure of Guests</h4>
+                        <p>Farewell to our beloved guests traveling back to Kano, Kaduna, and beyond.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="py-20 px-4">
+        <div class="max-w-6xl mx-auto section-fade-in">
+            <h2 class="font-display text-3xl md:text-4xl mb-6 text-center">Precious Memories</h2>
+            <div class="h-px w-24 bg-gold mx-auto mb-16"></div>
+            
+            <div class="mb-16">
+                <h3 class="text-2xl font-display text-burgundy text-center mb-8">Male Parent's Section</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    <!-- Gallery items will be added here -->
+                    <div class="gallery-item h-64 bg-gradient-to-r from-navy to-burgundy rounded-lg flex items-center justify-center">
+                        <span class="text-white">Wedding Day Photo 1</span>
+                    </div>
+                    <div class="gallery-item h-64 bg-gradient-to-r from-gold to-burgundy rounded-lg flex items-center justify-center">
+                        <span class="text-white">Wedding Day Photo 2</span>
+                    </div>
+                    <div class="gallery-item h-64 bg-gradient-to-r from-burgundy to-navy rounded-lg flex items-center justify-center">
+                        <span class="text-white">Wedding Day Photo 3</span>
+                    </div>
+                    <div class="gallery-item h-64 bg-gradient-to-r from-navy to-gold rounded-lg flex items-center justify-center">
+                        <span class="text-white">Wedding Day Photo 4</span>
+                    </div>
+                    <div class="gallery-item h-64 bg-gradient-to-r from-gold to-navy rounded-lg flex items-center justify-center">
+                        <span class="text-white">Wedding Day Photo 5</span>
+                    </div>
+                    <div class="gallery-item h-64 bg-gradient-to-r from-burgundy to-gold rounded-lg flex items-center justify-center">
+                        <span class="text-white">Wedding Day Photo 6</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="text-2xl font-display text-burgundy text-center mb-8">Female Parent's Section</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    <!-- Gallery items will be added here -->
+                    <div class="gallery-item h-64 bg-gradient-to-r from-navy to-burgundy rounded-lg flex items-center justify-center">
+                        <span class="text-white">Dinner Photo 1</span>
+                    </div>
+                    <div class="gallery-item h-64 bg-gradient-to-r from-gold to-burgundy rounded-lg flex items-center justify-center">
+                        <span class="text-white">Dinner Photo 2</span>
+                    </div>
+                    <div class="gallery-item h-64 bg-gradient-to-r from-burgundy to-navy rounded-lg flex items-center justify-center">
+                        <span class="text-white">Dinner Photo 3</span>
+                    </div>
+                    <div class="gallery-item h-64 bg-gradient-to-r from-navy to-gold rounded-lg flex items-center justify-center">
+                        <span class="text-white">Dinner Photo 4</span>
+                    </div>
+                    <div class="gallery-item h-64 bg-gradient-to-r from-gold to-navy rounded-lg flex items-center justify-center">
+                        <span class="text-white">Dinner Photo 5</span>
+                    </div>
+                    <div class="gallery-item h-64 bg-gradient-to-r from-burgundy to-gold rounded-lg flex items-center justify-center">
+                        <span class="text-white">Dinner Photo 6</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <button class="px-8 py-3 bg-gold text-navy rounded-full font-semibold hover:bg-burgundy hover:text-ivory transition-all duration-300 transform hover:scale-105">
+                    View Full Gallery
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Family Section -->
+    <section class="py-20 px-4 bg-burgundy text-ivory">
+        <div class="max-w-4xl mx-auto section-fade-in">
+            <h2 class="font-display text-3xl md:text-4xl mb-6 text-center">Our Families</h2>
+            <div class="h-px w-24 bg-gold mx-auto mb-16"></div>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="text-center">
+                    <div class="w-48 h-48 mx-auto mb-6 rounded-full gold-gradient flex items-center justify-center">
+                        <i class="fas fa-crown text-6xl text-navy"></i>
+                    </div>
+                    <h3 class="font-display text-2xl text-gold mb-4">Groom's Family</h3>
+                    <p class="mb-2">Dr. Abubakar</p>
+                    <p class="mb-2">And</p>
+                    <p>Their son Abusafyan</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-48 h-48 mx-auto mb-6 rounded-full gold-gradient flex items-center justify-center">
+                        <i class="fas fa-crown text-6xl text-navy"></i>
+                    </div>
+                    <h3 class="font-display text-2xl text-gold mb-4">Bride's Family</h3>
+                    <p class="mb-2">Hajia Rabi</p>
+                    <p class="mb-2">Daughter of Hajia Fatima Magajiya Abdulfatah</p>
+                    <p>And Alhaji Yusuf Ibrahim</p>
+                </div>
+            </div>
+            
+            <div class="mt-16 text-center">
+                <p class="text-lg italic">"Family is not an important thing, it's everything." - Michael J. Fox</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blessings Section -->
+    <section class="py-20 px-4 relative">
+        <div class="max-w-4xl mx-auto text-center section-fade-in">
+            <i class="fas fa-quote-left text-gold text-5xl mb-8 opacity-50"></i>
+            <h2 class="font-display text-3xl md:text-4xl mb-6">Blessings & Good Wishes</h2>
+            <div class="h-px w-24 bg-gold mx-auto mb-10"></div>
+            <p class="text-xl italic mb-12">May your marriage be filled with love, understanding, and countless moments of joy. As you build your life together, may you always find strength in each other and in the love of your families.</p>
+            <div class="font-script text-3xl text-gold">Abusafyan & His Bride</div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-4 bg-navy text-ivory text-center">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex justify-center space-x-6 mb-8">
+                <a href="#" class="w-10 h-10 rounded-full gold-gradient flex items-center justify-center">
+                    <i class="fab fa-facebook-f text-navy"></i>
+                </a>
+                <a href="#" class="w-10 h-10 rounded-full gold-gradient flex items-center justify-center">
+                    <i class="fab fa-instagram text-navy"></i>
+                </a>
+                <a href="#" class="w-10 h-10 rounded-full gold-gradient flex items-center justify-center">
+                    <i class="fab fa-twitter text-navy"></i>
+                </a>
+                <a href="#" class="w-10 h-10 rounded-full gold-gradient flex items-center justify-center">
+                    <i class="fab fa-whatsapp text-navy"></i>
+                </a>
+            </div>
+            <p class="mb-4">#AbusafyanWedding #KatsinaRoyalWedding</p>
+            <p class="text-gold">Designed with ❤️ for eternity</p>
+        </div>
+    </footer>
+
+    <script>
+        // Countdown timer
+        function updateCountdown() {
+            const weddingDate = new Date('2023-07-24').getTime();
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+            
+            if (distance < 0) {
+                document.getElementById('days').innerText = '00';
+                document.getElementById('hours').innerText = '00';
+                document.getElementById('minutes').innerText = '00';
+                document.getElementById('seconds').innerText = '00';
+                return;
+            }
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').innerText = days.toString().padStart(2, '0');
+            document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        
+        // Scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.section-fade-in');
+            
+            const fadeInOptions = {
+                threshold: 0.3,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const fadeInObserver = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, fadeInOptions);
+            
+            fadeElements.forEach(element => {
+                fadeInObserver.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>
